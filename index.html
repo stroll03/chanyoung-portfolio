@@ -12,7 +12,6 @@
     :root {
       --bg-navy: #0F172A;
       --bg-card: #1E293B;
-      --bg-card-hover: #263349;
       --kakao-yellow: #FEE500;
       --kakao-yellow-dim: rgba(254, 229, 0, 0.15);
       --text-main: #F8FAFC;
@@ -40,30 +39,115 @@
       color: var(--text-main);
       line-height: 1.65;
       word-break: keep-all;
+      min-height: 100vh;
+    }
+
+    /* 상단 네비게이션 바 */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-line);
+      padding: 10px 20px;
+    }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .nav-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--kakao-yellow);
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-tab {
+      background: transparent;
+      border: 1px solid var(--border-line);
+      color: var(--text-sub);
+      padding: 5px 12px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .nav-tab:hover {
+      border-color: var(--kakao-yellow);
+      color: var(--text-main);
+    }
+    .nav-tab.active {
+      background: var(--kakao-yellow);
+      color: #191919;
+      border-color: var(--kakao-yellow);
+    }
+    .mode-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--accent-blue);
+      color: var(--accent-blue);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .mode-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
     }
 
     main#deck {
       max-width: 1080px;
       margin: 0 auto;
-      padding: 24px 20px 80px;
+      padding: 24px 20px 100px;
       display: flex;
       flex-direction: column;
-      gap: 48px;
+      gap: 40px;
+    }
+
+    /* 슬라이드 모드 전환 로직 */
+    body.slide-mode main#deck {
+      min-height: calc(100vh - 60px);
+      justify-content: center;
+    }
+    body.slide-mode .slide {
+      display: none;
+      animation: slideFade 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    body.slide-mode .slide.active {
+      display: block;
+    }
+
+    @keyframes slideFade {
+      from { opacity: 0; transform: translateY(14px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .slide {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       backdrop-filter: blur(8px);
       border: 1.5px solid var(--border-line);
       border-radius: 24px;
-      padding: 44px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      padding: 40px 44px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
       position: relative;
       overflow: hidden;
     }
 
     .slide::before {
-      content: "SYS // BLUEPRINT_V1.0";
+      content: "SYS // BLUEPRINT_V2.0";
       position: absolute;
       top: 16px;
       right: 24px;
@@ -117,7 +201,7 @@
 
     /* 공통 헤더 */
     .slide-head {
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
     .chip {
       display: inline-block;
@@ -128,10 +212,10 @@
       border-radius: 99px;
       font-size: 0.85rem;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .slide-head h2 {
-      font-size: 1.9rem;
+      font-size: 1.85rem;
       font-weight: 900;
       line-height: 1.3;
     }
@@ -195,7 +279,7 @@
     .photo-box img {
       width: 100%;
       height: auto;
-      max-height: 360px;
+      max-height: 350px;
       object-fit: cover;
       display: block;
     }
@@ -211,11 +295,11 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
     .steps li {
       background: var(--bg-card);
-      padding: 16px 20px;
+      padding: 15px 18px;
       border-radius: 14px;
       border: 1px solid var(--border-line);
     }
@@ -223,11 +307,11 @@
       display: block;
       color: var(--kakao-yellow);
       margin-bottom: 4px;
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
     .steps li span {
       color: var(--text-sub);
-      font-size: 0.95rem;
+      font-size: 0.93rem;
     }
 
     /* 2. FLL 실험 데이터 비교 박스 */
@@ -235,27 +319,27 @@
       background: var(--bg-card);
       border: 1px solid var(--border-line);
       border-radius: 16px;
-      padding: 20px;
-      margin-top: 20px;
+      padding: 18px;
+      margin-top: 18px;
     }
     .exp-title {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--accent-blue);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .bar-group {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .bar-label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       margin-bottom: 4px;
     }
     .bar-track {
       background: #0F172A;
-      height: 12px;
+      height: 11px;
       border-radius: 99px;
       overflow: hidden;
     }
@@ -268,13 +352,13 @@
     .code-diff {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 14px;
       margin-top: 16px;
     }
     .code-card {
       background: #090D16;
       border-radius: 14px;
-      padding: 18px;
+      padding: 16px;
       border: 1px solid var(--border-line);
     }
     .code-card.bad { border-top: 4px solid var(--accent-red); }
@@ -291,10 +375,10 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
     .blk {
-      padding: 8px 12px;
+      padding: 7px 11px;
       border-radius: 6px;
       font-weight: 700;
       color: #fff;
@@ -309,7 +393,7 @@
       grid-template-columns: 1fr auto 1fr auto 1fr;
       gap: 12px;
       align-items: center;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
     .flow-box {
       background: var(--bg-card);
@@ -347,35 +431,35 @@
     .highlight-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
+      gap: 14px;
+      margin-bottom: 28px;
     }
     .highlight-card {
       background: var(--bg-card);
       border: 1px solid var(--border-line);
       border-radius: 16px;
-      padding: 20px;
+      padding: 18px;
     }
     .highlight-card .emoji {
-      font-size: 1.6rem;
-      margin-bottom: 6px;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
     }
     .highlight-card h3 {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       color: var(--kakao-yellow);
       margin-bottom: 4px;
     }
     .highlight-card p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text-sub);
     }
 
     .awards-layout {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 32px;
+      gap: 28px;
       align-items: start;
-      margin-bottom: 36px;
+      margin-bottom: 32px;
     }
 
     .timeline {
@@ -385,11 +469,11 @@
       padding-left: 24px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 13px;
     }
     .timeline li {
       position: relative;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
     }
     .timeline li::before {
       content: "";
@@ -406,55 +490,126 @@
       font-family: 'JetBrains Mono', monospace;
       color: var(--kakao-yellow);
       margin-right: 10px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .cert-gallery {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
     .cert-box img {
-      max-height: 240px;
+      max-height: 230px;
       object-fit: contain;
       background: #fff;
     }
 
-    /* 하단 2x2 현장 활동 및 영상 갤러리 */
     .camp-strip-title {
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       font-weight: 800;
       color: var(--kakao-yellow);
-      margin-bottom: 16px;
-      padding-top: 24px;
+      margin-bottom: 14px;
+      padding-top: 20px;
       border-top: 1px solid var(--border-line);
     }
     .camp-strip {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 18px;
     }
     .camp-box img {
-      height: 230px;
+      height: 220px;
       object-fit: cover;
+    }
+
+    /* 하단 플로팅 슬라이드 컨트롤 바 */
+    .slide-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid var(--kakao-yellow);
+      border-radius: 99px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+    body:not(.slide-mode) .slide-controls {
+      display: none;
+    }
+    .ctrl-btn {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-line);
+      padding: 7px 16px;
+      border-radius: 99px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .ctrl-btn:hover:not(:disabled) {
+      background: var(--kakao-yellow);
+      color: #191919;
+      border-color: var(--kakao-yellow);
+    }
+    .ctrl-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .ctrl-btn.primary {
+      background: var(--kakao-yellow);
+      color: #191919;
+      border-color: var(--kakao-yellow);
+    }
+    .page-indicator {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--kakao-yellow);
+      min-width: 54px;
+      text-align: center;
     }
 
     /* 반응형 (모바일/태블릿) */
     @media (max-width: 768px) {
-      .slide { padding: 28px 20px; }
-      .title-main { font-size: 1.9rem; }
+      .slide { padding: 26px 18px; }
+      .title-main { font-size: 1.85rem; }
       .split, .code-diff, .awards-layout, .camp-strip { grid-template-columns: 1fr; }
       .flow { grid-template-columns: 1fr; text-align: center; }
       .flow-arrow { transform: rotate(90deg); }
+      .nav-brand { display: none; }
     }
   </style>
 </head>
-<body>
+<body class="slide-mode">
+
+  <!-- 상단 슬라이드 퀵 네비게이션 -->
+  <nav class="top-nav">
+    <div class="nav-inner">
+      <span class="nav-brand">KIM CHANYOUNG // PORTFOLIO</span>
+      <div class="nav-tabs" id="navTabs">
+        <button class="nav-tab active" onclick="goSlide(0)">표지</button>
+        <button class="nav-tab" onclick="goSlide(1)">01. 비전</button>
+        <button class="nav-tab" onclick="goSlide(2)">02. 협업·FLL</button>
+        <button class="nav-tab" onclick="goSlide(3)">03. 디버깅</button>
+        <button class="nav-tab" onclick="goSlide(4)">04. AI 제안</button>
+        <button class="nav-tab" onclick="goSlide(5)">05. 수상·기록</button>
+      </div>
+      <button class="mode-btn" id="modeToggle" onclick="toggleMode()">전체 스크롤 보기</button>
+    </div>
+  </nav>
 
   <main id="deck">
 
     <!-- 0. 타이틀 슬라이드 -->
-    <section class="slide title-slide" id="title">
+    <section class="slide title-slide active" id="title">
       <h1 class="title-main">
         <span class="title-sub">구조를 설계하고, 코드로 움직임을 만들다</span>
         KAKAO AI ROOKIE CAMP 3기 지원
@@ -769,7 +924,7 @@
           <div class="photo-box camp-box" style="border-color: var(--kakao-yellow);">
             <iframe 
               width="100%" 
-              height="230" 
+              height="220" 
               src="https://www.youtube.com/embed/mBAR1grniJw" 
               title="2024 과학 UCC대회 금상 수상작" 
               frameborder="0" 
@@ -804,6 +959,84 @@
     </section>
 
   </main>
+
+  <!-- 하단 슬라이드 컨트롤러 -->
+  <div class="slide-controls" id="slideControls">
+    <button class="ctrl-btn" id="prevBtn" onclick="changeSlide(-1)">◀ 이전</button>
+    <span class="page-indicator" id="pageIndicator">1 / 6</span>
+    <button class="ctrl-btn primary" id="nextBtn" onclick="changeSlide(1)">다음 ▶</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const tabs = document.querySelectorAll('.nav-tab');
+    const indicator = document.getElementById('pageIndicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function updateSlideView() {
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === currentSlide);
+      });
+      tabs.forEach((tab, idx) => {
+        tab.classList.toggle('active', idx === currentSlide);
+      });
+      indicator.textContent = `${currentSlide + 1} / ${slides.length}`;
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === slides.length - 1;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function changeSlide(step) {
+      const next = currentSlide + step;
+      if (next >= 0 && next < slides.length) {
+        currentSlide = next;
+        updateSlideView();
+      }
+    }
+
+    function goSlide(index) {
+      if (!document.body.classList.contains('slide-mode')) {
+        slides[index].scrollIntoView({ behavior: 'smooth' });
+        tabs.forEach((tab, idx) => tab.classList.toggle('active', idx === index));
+        return;
+      }
+      currentSlide = index;
+      updateSlideView();
+    }
+
+    function toggleMode() {
+      const isSlide = document.body.classList.toggle('slide-mode');
+      const btn = document.getElementById('modeToggle');
+      btn.textContent = isSlide ? '전체 스크롤 보기' : '슬라이드 모드 보기';
+      if (isSlide) updateSlideView();
+    }
+
+    // 키보드 좌우 방향키 지원
+    document.addEventListener('keydown', (e) => {
+      if (!document.body.classList.contains('slide-mode')) return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') changeSlide(1);
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') changeSlide(-1);
+    });
+
+    // 모바일 좌우 스와이프 지원
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (!document.body.classList.contains('slide-mode')) return;
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 50) {
+        if (diff < 0) changeSlide(1);
+        else changeSlide(-1);
+      }
+    }, { passive: true });
+
+    updateSlideView();
+  </script>
 
 </body>
 </html>
